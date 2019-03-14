@@ -141,7 +141,7 @@ public class ProdutoDAO {
         }
                        
     }
-    public void deletar(Produto p){
+    public void deletar(int id){
         java.sql.Date data = new java.sql.Date(System.currentTimeMillis());
         Connection con = ConnectionFactory.obterConexao();
         PreparedStatement stmt = null;
@@ -149,7 +149,7 @@ public class ProdutoDAO {
         try {
             stmt = con.prepareStatement("DELETE from produto WHERE id = ?;");
             
-            stmt.setInt(1, p.getId());
+            stmt.setInt(1, id);
             
             stmt.executeUpdate();
             System.out.println("Excluido com sucesso");

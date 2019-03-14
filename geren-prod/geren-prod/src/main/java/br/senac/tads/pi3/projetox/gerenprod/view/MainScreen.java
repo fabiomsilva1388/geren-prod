@@ -5,6 +5,7 @@
  */
 package br.senac.tads.pi3.projetox.gerenprod.view;
 
+import br.senac.tads.pi3.projetox.gerenprod.controller.ProdutoController;
 import br.senac.tads.pi3.projetox.gerenprod.exceptions.Exceptions;
 import javax.swing.JOptionPane;
 
@@ -177,6 +178,11 @@ public class MainScreen extends javax.swing.JFrame {
         pnl_FormBackground.add(btn_Atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 80, -1));
 
         btn_Remover.setText("Remover");
+        btn_Remover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RemoverActionPerformed(evt);
+            }
+        });
         pnl_FormBackground.add(btn_Remover, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 80, -1));
 
         btn_Salvar.setText("Salvar");
@@ -188,7 +194,11 @@ public class MainScreen extends javax.swing.JFrame {
         pnl_FormBackground.add(btn_Salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 80, -1));
 
         ckb_Categoria.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
-        ckb_Categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ckb_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckb_CategoriaActionPerformed(evt);
+            }
+        });
         pnl_FormBackground.add(ckb_Categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 140, -1));
 
         lbl_PrecoVenda1.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
@@ -259,6 +269,7 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(pnl_TableBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnl_TitleBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_MainBackgroundLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(pnl_FormBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnl_SearchBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -316,6 +327,8 @@ public class MainScreen extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Preencha os campos em vermelho!");
+        }else{
+            ProdutoController.Salvar(txt_NomeProduto.getText(), txt_Descricao.getText(), Double.parseDouble(txt_PrecoCompra.getText()), Double.parseDouble(txt_PrecoVenda.getText()), Integer.parseInt(txt_Quantidade.getText()), Boolean.parseBoolean(ckb_Ativo.getText()));
         }
 
 
@@ -326,7 +339,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_NomeProdutoActionPerformed
 
     private void btn_AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtualizarActionPerformed
-        // TODO add your handling code here:
+        ProdutoController.Atualizar(txt_NomeProduto.getText(), txt_Descricao.getText(), Double.parseDouble(txt_PrecoCompra.getText()), Double.parseDouble(txt_PrecoVenda.getText()), Integer.parseInt(txt_Quantidade.getText()), Boolean.parseBoolean(ckb_Ativo.getText()));
     }//GEN-LAST:event_btn_AtualizarActionPerformed
 
     public void LimparFormulario() {
@@ -406,6 +419,14 @@ public class MainScreen extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txt_NomeProdutoBuscaKeyTyped
+
+    private void ckb_CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckb_CategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckb_CategoriaActionPerformed
+
+    private void btn_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RemoverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_RemoverActionPerformed
 
     /**
      * @param args the command line arguments
