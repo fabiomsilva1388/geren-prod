@@ -5,6 +5,9 @@
  */
 package br.senac.tads.pi3.projetox.gerenprod.view;
 
+import br.senac.tads.pi3.projetox.gerenprod.exceptions.Exceptions;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author victor.ganjos
@@ -92,9 +95,19 @@ public class MainScreen extends javax.swing.JFrame {
         pnl_FormBackground.add(lbl_Quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 20));
 
         txt_Quantidade.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        txt_Quantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_QuantidadeKeyTyped(evt);
+            }
+        });
         pnl_FormBackground.add(txt_Quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 100, -1));
 
         txt_Descricao.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        txt_Descricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_DescricaoKeyTyped(evt);
+            }
+        });
         pnl_FormBackground.add(txt_Descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 420, 70));
 
         txt_NomeProduto.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
@@ -103,9 +116,19 @@ public class MainScreen extends javax.swing.JFrame {
                 txt_NomeProdutoActionPerformed(evt);
             }
         });
+        txt_NomeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_NomeProdutoKeyTyped(evt);
+            }
+        });
         pnl_FormBackground.add(txt_NomeProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 370, -1));
 
         txt_PrecoCompra.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        txt_PrecoCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_PrecoCompraKeyTyped(evt);
+            }
+        });
         pnl_FormBackground.add(txt_PrecoCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 120, -1));
 
         lbl_Descricao.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
@@ -138,6 +161,11 @@ public class MainScreen extends javax.swing.JFrame {
         pnl_FormBackground.add(lbl_NomeProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 100, 20));
 
         txt_PrecoVenda.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        txt_PrecoVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_PrecoVendaKeyTyped(evt);
+            }
+        });
         pnl_FormBackground.add(txt_PrecoVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 110, -1));
 
         btn_Atualizar.setText("Atualizar");
@@ -176,6 +204,11 @@ public class MainScreen extends javax.swing.JFrame {
         lbl_NomeProdutoBusca.setText("Nome do Produto:");
 
         txt_NomeProdutoBusca.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        txt_NomeProdutoBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_NomeProdutoBuscaKeyTyped(evt);
+            }
+        });
 
         btn_Buscar.setText("Buscar");
         btn_Buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -269,6 +302,23 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void btn_SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SalvarActionPerformed
         // TODO add your handling code here:
+        Exceptions.limparMensagesErro();
+
+        Exceptions.validarCampoTexto(txt_NomeProduto);
+        Exceptions.validarCampoTexto(txt_Descricao);
+        Exceptions.validarDecimal(txt_PrecoCompra);
+        Exceptions.validarDecimal(txt_PrecoVenda);
+        Exceptions.validarNumero(txt_Quantidade);
+        if (Exceptions.getMensagensErro().size() > 0) {
+            String erros = "";
+            for (String erro : Exceptions.getMensagensErro()) {
+                erros += erro + "<br/>";
+            }
+
+            JOptionPane.showMessageDialog(null, "Preencha os campos em vermelho!");
+        }
+
+
     }//GEN-LAST:event_btn_SalvarActionPerformed
 
     private void txt_NomeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NomeProdutoActionPerformed
@@ -278,6 +328,84 @@ public class MainScreen extends javax.swing.JFrame {
     private void btn_AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtualizarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_AtualizarActionPerformed
+
+    public void LimparFormulario() {
+        txt_Descricao.setText("");
+        txt_NomeProduto.setText("");
+        txt_PrecoCompra.setText("");
+        txt_PrecoVenda.setText("");
+        txt_Quantidade.setText("");
+    }
+
+    public void LimparFormularioBusca() {
+        txt_NomeProdutoBusca.setText("");
+    }
+
+    private void txt_NomeProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_NomeProdutoKeyTyped
+        // TODO add your handling code here:
+        if (!txt_NomeProduto.getText().isEmpty()) {
+
+            if (txt_NomeProduto.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_NomeProdutoKeyTyped
+
+    private void txt_DescricaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_DescricaoKeyTyped
+        // TODO add your handling code here:
+        if (!txt_Descricao.getText().isEmpty()) {
+
+            if (txt_Descricao.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_DescricaoKeyTyped
+
+    private void txt_PrecoCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_PrecoCompraKeyTyped
+        // TODO add your handling code here:
+        if (!txt_PrecoCompra.getText().isEmpty()) {
+
+            if (txt_PrecoCompra.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_PrecoCompraKeyTyped
+
+    private void txt_PrecoVendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_PrecoVendaKeyTyped
+        // TODO add your handling code here:
+        if (!txt_PrecoVenda.getText().isEmpty()) {
+
+            if (txt_PrecoVenda.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_PrecoVendaKeyTyped
+
+    private void txt_QuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_QuantidadeKeyTyped
+        // TODO add your handling code here:
+        if (!txt_Quantidade.getText().isEmpty()) {
+
+            if (txt_Quantidade.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_QuantidadeKeyTyped
+
+    private void txt_NomeProdutoBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_NomeProdutoBuscaKeyTyped
+        // TODO add your handling code here:
+        if (!txt_NomeProdutoBusca.getText().isEmpty()) {
+
+            if (txt_NomeProdutoBusca.getText().length() >= 50) {
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "Máximo de 50 caracteres atingido!");
+            }
+        }
+    }//GEN-LAST:event_txt_NomeProdutoBuscaKeyTyped
 
     /**
      * @param args the command line arguments
